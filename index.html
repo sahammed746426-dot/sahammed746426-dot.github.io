@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahariar Ahammed — Systems & Software Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     DESIGN SYSTEM & THEME TOKENS (Obsidian & Titanium Atelier)
+     ========================================================================== */
+  :root {
+    --bg-base: #0B0D11;
+    --bg-subtle: #11141A;
+    --surface: #161A22;
+    --surface-elevated: #1D222D;
+    --surface-hover: #242B38;
+    
+    --ink-primary: #F3F4F6;
+    --ink-secondary: #9CA3AF;
+    --ink-muted: #6B7280;
+    --ink-faint: #4B5563;
+
+    --border-subtle: rgba(255, 255, 255, 0.07);
+    --border-medium: rgba(255, 255, 255, 0.14);
+    --border-strong: rgba(255, 255, 255, 0.28);
+
+    --accent-electric: #38BDF8;
+    --accent-glow: rgba(56, 189, 248, 0.15);
+    --accent-amber: #F59E0B;
+    --accent-emerald: #10B981;
+
+    --brand-yellow: #FFDD00;
+    --brand-yellow-ink: #0B0D11;
+
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    --shadow-spotlight: 0 0 40px -10px rgba(56, 189, 248, 0.18);
+
+    --font-display: 'Space Grotesk', -apple-system, sans-serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-pill: 9999px;
+
+    --spotlight-x: 50%;
+    --spotlight-y: 50%;
+  }
+
+  body.light-theme {
+    --bg-base: #F8F9FA;
+    --bg-subtle: #F1F3F5;
+    --surface: #FFFFFF;
+    --surface-elevated: #F8F9FB;
+    --surface-hover: #EBEFF5;
+
+    --ink-primary: #111827;
+    --ink-secondary: #4B5563;
+    --ink-muted: #6B7280;
+    --ink-faint: #9CA3AF;
+
+    --border-subtle: rgba(0, 0, 0, 0.07);
+    --border-medium: rgba(0, 0, 0, 0.14);
+    --border-strong: rgba(0, 0, 0, 0.25);
+
+    --accent-electric: #0284C7;
+    --accent-glow: rgba(2, 132, 199, 0.12);
+    --accent-amber: #D97706;
+    --accent-emerald: #059669;
+
+    --shadow-soft: 0 8px 30px -4px rgba(0, 0, 0, 0.06);
+    --shadow-spotlight: 0 0 35px -5px rgba(2, 132, 199, 0.12);
+  }
+
+  /* RESET & BASE */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--ink-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+  }
+
+  /* BACKGROUND PRECISION AMBIENT GRID */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: 
+      radial-gradient(var(--border-subtle) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { background: none; border: none; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent-electric); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ==========================================================================
+     HEADER & DYNAMIC NAV
+     ========================================================================== */
+  header.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(11, 13, 17, 0.85);
+    backdrop-filter: blur(18px) saturate(180%);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.25s ease;
+  }
+  body.light-theme header.site-header {
+    background: rgba(248, 249, 250, 0.88);
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .brand-signature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+  }
+  .brand-cube {
+    width: 24px;
+    height: 24px;
+    background: var(--brand-yellow);
+    color: var(--brand-yellow-ink);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
+    box-shadow: 0 0 16px -2px rgba(255, 221, 0, 0.4);
+  }
+
+  nav.nav-links {
+    display: flex;
+    gap: 6px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-subtle);
+  }
+  nav.nav-links button {
+    padding: 6px 16px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--ink-secondary);
+    border-radius: var(--radius-pill);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  nav.nav-links button:hover { color: var(--ink-primary); }
+  nav.nav-links button.active {
+    background: var(--surface-hover);
+    color: var(--ink-primary);
+    box-shadow: inset 0 0 0 1px var(--border-medium);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .icon-tool-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface);
+    color: var(--ink-secondary);
+    display: grid;
+    place-items: center;
+    transition: all 0.18s ease;
+  }
+  .icon-tool-btn:hover {
+    color: var(--ink-primary);
+    border-color: var(--border-medium);
+    background: var(--surface-hover);
+  }
+
+  /* ==========================================================================
+     BUTTONS & MICRO UI
+     ========================================================================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--ink-primary);
+    color: var(--bg-base);
+    box-shadow: 0 4px 14px -3px rgba(255, 255, 255, 0.15);
+  }
+  .btn-primary:hover { opacity: 0.92; }
+
+  .btn-yellow {
+    background: var(--brand-yellow);
+    color: #000;
+    font-weight: 700;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  .btn-yellow:hover { filter: brightness(1.05); }
+
+  .btn-outline {
+    background: var(--surface);
+    color: var(--ink-primary);
+    border-color: var(--border-medium);
+  }
+  .btn-outline:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
+  }
+
+  .tag-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ==========================================================================
+     PAGE CONTAINER & HERO SECTION
+     ========================================================================== */
+  main { min-height: calc(100vh - 160px); }
+  section.page { display: none; padding: 48px 0 96px; }
+  section.page.active { display: block; animation: pageIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 48px;
+  }
+  .hero-block h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    max-width: 22ch;
+  }
+  .hero-block p.lede {
+    font-size: 1.18rem;
+    color: var(--ink-secondary);
+    max-width: 58ch;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  /* ==========================================================================
+     CARDS & MOUSE SPOTLIGHT EFFECT
+     ========================================================================== */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 24px;
+  }
+
+  .interactive-card {
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  }
+  .interactive-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .interactive-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glow), transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .interactive-card:hover::after { opacity: 1; }
+
+  .card-banner {
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card-banner canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .badge-chip {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .badge-chip.design { background: rgba(56, 189, 248, 0.12); color: var(--accent-electric); border: 1px solid rgba(56, 189, 248, 0.25); }
+  .badge-chip.app { background: rgba(16, 185, 129, 0.12); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.25); }
+  .badge-chip.shop { background: rgba(245, 158, 11, 0.12); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.25); }
+
+  .card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  .card-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .card-content p {
+    color: var(--ink-secondary);
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .card-meta-bar {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ==========================================================================
+     DUAL VIEW: LEDGER TABLE VIEW
+     ========================================================================== */
+  .ledger-table-wrap {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 100px;
+    padding: 16px 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+  }
+  .ledger-row:last-child { border-bottom: none; }
+  .ledger-row:hover { background-color: var(--surface-hover); }
+  .ledger-head {
+    background: var(--bg-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 600;
+    cursor: default;
+  }
+
+  @media (max-width: 640px) {
+    .ledger-head { display: none; }
+    .ledger-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  /* ==========================================================================
+     INTERACTIVE DETAIL VIEW & SANDBOX CONTAINERS
+     ========================================================================== */
+  .detail-showcase {
+    width: 100%;
+    min-height: 240px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    border: 1px solid var(--border-medium);
+    box-shadow: var(--shadow-spotlight);
+    position: relative;
+    overflow: hidden;
+  }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    margin-top: 40px;
+  }
+  @media (max-width: 800px) { .spec-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  .sandbox-station {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin: 32px 0;
+    box-shadow: var(--shadow-soft);
+  }
+  .sandbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 12px;
+  }
+
+  /* ==========================================================================
+     MODAL & COMMAND PALETTE
+     ========================================================================== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: none;
+    place-items: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: grid; }
+
+  .command-palette-box {
+    width: min(580px, 100%);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .palette-input-wrap {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .palette-input-wrap input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1.1rem;
+    color: var(--ink-primary);
+  }
+  .palette-results {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .palette-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  .palette-item:hover, .palette-item.selected {
+    background-color: var(--surface-hover);
+  }
+
+  /* TOAST */
+  .toast-banner {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--surface-elevated);
+    color: var(--ink-primary);
+    border: 1px solid var(--border-strong);
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    box-shadow: var(--shadow-soft);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(120px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .toast-banner.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<header class="site-header">
+  <div class="wrap nav-bar">
+    <button type="button" class="brand-signature" data-nav="home" aria-label="Shahariar Ahammed home">
+      <div class="brand-cube" aria-hidden="true">SA</div>
+      <span>Shahariar Ahammed</span>
+    </button>
+
+    <nav class="nav-links" id="mainNav" aria-label="Main navigation">
+      <button class="active" data-nav="home" aria-current="page">Home</button>
+      <button data-nav="work">Catalog</button>
+      <button data-nav="about">Atelier</button>
+      <button data-nav="blog">Notes</button>
+      <button data-nav="contact">Inquire</button>
+    </nav>
+
+    <div class="nav-actions">
+      <button type="button" class="icon-tool-btn" onclick="openCommandPalette()" aria-label="Open Command Menu (Cmd + K)">
+        <span aria-hidden="true">⌘</span>
+      </button>
+      <button type="button" class="icon-tool-btn" id="themeToggleBtn" aria-label="Toggle visual theme">
+        <span id="themeToggleIcon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="mainContentArea">
+
+  <!-- ==================== PAGE: HOME ==================== -->
+  <section class="page active" id="page-home" aria-labelledby="homeHeroTitle">
+    <div class="hero-block">
+      <div class="tag-label">INDEPENDENT SOFTWARE ARCHITECT & DESIGNER</div>
+      <h1 id="homeHeroTitle">Purpose-built tools designed with relentless restraint.</h1>
+      <p class="lede">I build zero-telemetry developer utilities, local-first web applications, and robust graphic identity systems. Designed to be tested in seconds with zero onboarding loops.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+        <button type="button" class="btn btn-primary" data-nav="work">Explore the catalog ↗</button>
+        <button type="button" class="btn btn-outline" data-nav="contact">Initiate project</button>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px;">
+      <span class="tag-label">LIVE SYSTEM REGISTRY</span>
+      <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">AUTO-REFRESHING</span>
+    </div>
+
+    <!-- Quick Ledger on Home -->
+    <div class="ledger-table-wrap" style="margin-bottom:54px;">
+      <div class="ledger-row ledger-head">
+        <div>SYSTEM NAME</div>
+        <div>ARCHITECTURE</div>
+        <div>DISTRIBUTION</div>
+        <div style="text-align:right;">INSPECT</div>
+      </div>
+      <div id="homeFeaturedLedger"></div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px;">
+      <h2>Curated Engineering Works</h2>
+      <button type="button" class="tag-label" data-nav="work" style="cursor:pointer;">VIEW COMPLETE CATALOG &rarr;</button>
+    </div>
+    <div class="work-grid" id="homeFeaturedCards"></div>
+  </section>
+
+  <!-- ==================== PAGE: CATALOG / WORK ==================== -->
+  <section class="page" id="page-work" aria-labelledby="catalogTitle">
+    <div class="tag-label">STUDIO REPOSITORY</div>
+    <h1 id="catalogTitle" style="font-size:2.6rem; margin:6px 0 12px;">Software, Tools & Assets</h1>
+    <p class="lede" style="margin-bottom:32px;">Production desktop releases, single-page web utilities, and vector component assets.</p>
+
+    <!-- Filter toolbar & view switcher -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:28px;">
+      <div id="catalogFilterChips" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+      
+      <div style="display:flex; gap:10px; align-items:center;">
+        <div style="position:relative;">
+          <input type="text" id="catalogSearchInput" placeholder="Filter systems ( / )" 
+            style="background:var(--surface); border:1px solid var(--border-medium); border-radius:var(--radius-pill); padding:8px 36px 8px 16px; font-size:0.86rem; color:var(--ink-primary); width:200px;">
+          <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:var(--font-mono); font-size:0.7rem; color:var(--ink-muted);">/</span>
+        </div>
+        <!-- Dual view buttons -->
+        <div style="display:flex; background:var(--surface); border:1px solid var(--border-medium); border-radius:var(--radius-sm); padding:2px;">
+          <button type="button" id="viewModeGridBtn" class="icon-tool-btn" style="width:30px; height:30px; border:none;" title="Grid View" aria-label="Switch to Grid View">⊞</button>
+          <button type="button" id="viewModeTableBtn" class="icon-tool-btn" style="width:30px; height:30px; border:none;" title="Ledger View" aria-label="Switch to Ledger View">≡</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="catalogOutputContainer"></div>
+  </section>
+
+  <!-- ==================== PAGE: ABOUT / ATELIER ==================== -->
+  <section class="page" id="page-about" aria-labelledby="atelierTitle">
+    <div class="tag-label">ATELIER PROFILE</div>
+    <h1 id="atelierTitle" style="margin-bottom:32px;">Engineering & Aesthetic Practice</h1>
+    <div class="spec-grid" style="margin-top:0;">
+      <div>
+        <p class="lede" style="margin-bottom:24px;">
+          I operate an independent software practice crafting high-speed personal computing tools, brand typography systems, and local-first software.
+        </p>
+        <p style="color:var(--ink-secondary); line-height:1.7; margin-bottom:24px;">
+          Prior to working independently, I spent six years architecting critical telemetry infrastructure and web application frontends. My philosophy is grounded in simplicity: tools with instant start times, local persistence by default, and interfaces that respect human cognition.
+        </p>
+
+        <h3 style="font-size:1.15rem; margin:36px 0 16px;">Core Disciplines & Stack</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:12px 0; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); width:140px;">CLIENTS</td>
+              <td style="padding:12px 0;">TypeScript, Svelte, React, Tauri (Rust), Electron</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:12px 0; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">SYSTEMS</td>
+              <td style="padding:12px 0;">Node.js, SQLite, Redis, Cloudflare Workers, Python</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:12px 0; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">IDENTITY</td>
+              <td style="padding:12px 0;">Figma, Parametric Vector Design, Print debossing, Packaging</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside style="background:var(--surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:28px; height:fit-content;">
+        <div style="width:100%; aspect-ratio:1; border-radius:12px; background:var(--bg-subtle); border:1px solid var(--border-medium); display:grid place-items:center; font-family:var(--font-mono); font-size:0.8rem; color:var(--ink-muted); margin-bottom:20px;">
+          AHAMMED LABS // CAS-01
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px; font-size:0.85rem;">
+          <div><strong style="color:var(--ink-primary);">Location:</strong> <span style="color:var(--ink-secondary);">Cascadia, Pacific Northwest</span></div>
+          <div><strong style="color:var(--ink-primary);">Status:</strong> <span style="color:var(--accent-emerald);">Accepting 1 project for Q4</span></div>
+          <div><strong style="color:var(--ink-primary);">Contact:</strong> <span style="color:var(--accent-electric); cursor:pointer;" onclick="copyContactEmail()">contact@shahariar-ahammed.dev</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE: NOTES / ESSAYS ==================== -->
+  <section class="page" id="page-blog" aria-labelledby="notesPageTitle">
+    <div class="tag-label">WRITINGS & TECHNICAL NOTES</div>
+    <h1 id="notesPageTitle" style="margin-bottom:32px;">Notes on Craft & Compute</h1>
+    <div id="blogPostListing" style="display:flex; flex-direction:column; gap:20px;"></div>
+  </section>
+
+  <!-- ==================== PAGE: CONTACT / INQUIRY ==================== -->
+  <section class="page" id="page-contact" aria-labelledby="inquireTitle">
+    <div class="tag-label">DISPATCH AN INQUIRY</div>
+    <h1 id="inquireTitle" style="margin-bottom:12px;">Let's discuss a commission</h1>
+    <p class="lede" style="margin-bottom:36px;">I partner with early-stage founders and product teams on custom tools, desktop engineering, and design systems.</p>
+
+    <div class="spec-grid" style="margin-top:0;">
+      <div>
+        <form id="studioInquiryForm" style="display:flex; flex-direction:column; gap:20px;" novalidate>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div>
+              <label for="formName" class="tag-label" style="margin-bottom:6px;">Your Name</label>
+              <input id="formName" type="text" required placeholder="Elena Rostova" style="width:100%; background:var(--surface); border:1px solid var(--border-medium); border-radius:10px; padding:12px 14px; color:var(--ink-primary);">
+              <div id="errName" style="color:#EF4444; font-size:0.75rem; font-family:var(--font-mono); margin-top:4px;"></div>
+            </div>
+            <div>
+              <label for="formEmail" class="tag-label" style="margin-bottom:6px;">Email Address</label>
+              <input id="formEmail" type="email" required placeholder="elena@company.com" style="width:100%; background:var(--surface); border:1px solid var(--border-medium); border-radius:10px; padding:12px 14px; color:var(--ink-primary);">
+              <div id="errEmail" style="color:#EF4444; font-size:0.75rem; font-family:var(--font-mono); margin-top:4px;"></div>
+            </div>
+          </div>
+
+          <div>
+            <label class="tag-label" style="margin-bottom:6px;">Budget Scope</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-outline active-budget" onclick="selectBudget(this, '< $5k')">&lt; $5k</button>
+              <button type="button" class="btn btn-outline" onclick="selectBudget(this, '$5k - $15k')">$5k - $15k</button>
+              <button type="button" class="btn btn-outline" onclick="selectBudget(this, '$15k+')">$15k+</button>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label for="formMsg" class="tag-label">Project Brief</label>
+              <span id="formCharCount" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--ink-muted);">0 / 500</span>
+            </div>
+            <textarea id="formMsg" maxlength="500" required placeholder="Provide context regarding problem scope, expected deadlines, and technical requirements..." style="width:100%; min-height:120px; background:var(--surface); border:1px solid var(--border-medium); border-radius:10px; padding:12px 14px; color:var(--ink-primary); resize:vertical;"></textarea>
+            <div id="errMsg" style="color:#EF4444; font-size:0.75rem; font-family:var(--font-mono); margin-top:4px;"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Transmit Inquiry &rarr;</button>
+        </form>
+
+        <div id="inquiryConfirmation" style="display:none; background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.3); padding:24px; border-radius:var(--radius-md); margin-top:16px;">
+          <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-emerald); margin-bottom:6px;" id="confirmationRefId"></div>
+          <h3 style="margin-bottom:6px;">Transmission Received</h3>
+          <p style="color:var(--ink-secondary); font-size:0.92rem; margin:0;">Inquiry logged to Cascadia queue. You will receive a direct reply within 24–48 hours.</p>
+        </div>
+      </div>
+
+      <aside style="color:var(--ink-secondary); font-size:0.9rem; line-height:1.7;">
+        <h3 style="color:var(--ink-primary); font-size:1rem; margin-bottom:12px;">Direct Inquiries</h3>
+        <p>If you prefer standard encrypted email or have urgent requests, ping my workstation directly:</p>
+        <div style="margin:16px 0; font-family:var(--font-mono); color:var(--accent-electric); cursor:pointer;" onclick="copyContactEmail()">
+          contact@shahariar-ahammed.dev 📋
+        </div>
+        <p>Typical response window: Mon–Thu 09:00–18:00 PST.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE: DETAIL VIEW ==================== -->
+  <section class="page" id="page-detail">
+    <button type="button" class="tag-label" data-nav="work" style="cursor:pointer; margin-bottom:24px;">&larr; RETURN TO CATALOG</button>
+    <div id="detailViewContainer"></div>
+  </section>
+
+  <!-- ==================== PAGE: BLOG POST DETAIL ==================== -->
+  <section class="page" id="page-blogpost">
+    <button type="button" class="tag-label" data-nav="blog" style="cursor:pointer; margin-bottom:24px;">&larr; BACK TO WRITINGS</button>
+    <article id="blogPostContainer" style="max-width:68ch; margin-top:16px;"></article>
+  </section>
+
+</main>
+
+<!-- ==================== COMMAND PALETTE MODAL (⌘K) ==================== -->
+<div class="modal-overlay" id="commandPaletteModal" role="dialog" aria-modal="true" aria-label="Command search palette">
+  <div class="command-palette-box">
+    <div class="palette-input-wrap">
+      <span style="font-family:var(--font-mono); color:var(--ink-muted);">⌘</span>
+      <input type="text" id="paletteSearchField" placeholder="Search systems, essays, actions..." autocomplete="off">
+      <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--ink-muted);">ESC</span>
+    </div>
+    <div class="palette-results" id="paletteResultsList"></div>
+  </div>
+</div>
+
+<!-- ==================== CHECKOUT / ASSET MODAL ==================== -->
+<div class="modal-overlay" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalAssetTitle">
+  <div class="command-palette-box" style="padding:28px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div class="tag-label">DIGITAL ASSET STORE</div>
+      <button type="button" onclick="closeModal()" style="font-family:var(--font-mono); font-size:1.1rem;">✕</button>
+    </div>
+    <h2 id="modalAssetTitle" style="font-size:1.4rem; margin:10px 0 4px;">Asset Name</h2>
+    <div id="modalAssetPrice" style="font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:var(--accent-amber); margin-bottom:12px;">$0.00</div>
+    <p id="modalAssetDesc" style="color:var(--ink-secondary); font-size:0.92rem; margin-bottom:20px;"></p>
+    
+    <label class="tag-label" style="margin-bottom:8px;">COMMERCIAL LICENSE TIER</label>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;">
+      <div id="licStdBtn" class="btn btn-outline" onclick="selectLicense('standard')" style="flex-direction:column; padding:12px; border-color:var(--accent-electric); cursor:pointer;">
+        <span>Standard</span>
+        <span style="font-size:0.7rem; color:var(--ink-muted);">1 Project Seat</span>
+      </div>
+      <div id="licExtBtn" class="btn btn-outline" onclick="selectLicense('extended')" style="flex-direction:column; padding:12px; cursor:pointer;">
+        <span>Extended</span>
+        <span style="font-size:0.7rem; color:var(--ink-muted);">Unlimited Commercial</span>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-yellow" id="purchaseActionBtn" style="width:100%;" onclick="runSimulatedPurchase()">Execute Purchase & Download ↓</button>
+    <div id="purchaseProgressTrack" style="display:none; height:6px; background:var(--surface-hover); border-radius:3px; margin-top:14px; overflow:hidden;">
+      <div id="purchaseProgressBar" style="height:100%; width:0%; background:var(--accent-emerald); transition:width 1.6s ease;"></div>
+    </div>
+    <div id="purchaseStatusMsg" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--ink-muted); text-align:center; margin-top:8px;">Receipt generated automatically. Direct file delivery.</div>
+  </div>
+</div>
+
+<!-- ==================== TOAST ALERT ==================== -->
+<div class="toast-banner" id="toastBox" role="status" aria-live="polite">
+  <span style="color:var(--accent-emerald);">✓</span>
+  <span id="toastMessage">Action completed successfully</span>
+</div>
+
+<footer style="border-top:1px solid var(--border-subtle); padding:40px 0; margin-top:64px; font-size:0.85rem; color:var(--ink-muted);">
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div>Shahariar Ahammed Atelier · Built for zero-friction computation</div>
+    <div style="display:flex; gap:18px; font-family:var(--font-mono);">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <button type="button" onclick="copyContactEmail()">Copy Email</button>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================================================
+     CORE APPLICATION JAVASCRIPT
+     ========================================================================== -->
+<script>
+// ============================================================================
+// SYSTEM DATA ENGINE
+// ============================================================================
+const SYSTEMS = [
+  {
+    id: "pace",
+    name: "Pace Split Engine",
+    category: "App",
+    type: "Web Utility · PWA",
+    badge: "Split Prediction Engine",
+    featured: true,
+    price: null,
+    gradient: "linear-gradient(135deg, #064E3B 0%, #047857 100%)",
+    desc: "A responsive pace and cadence computer converting split time, running speed, and finish intervals with zero latency.",
+    problem: "Athletes frequently do split math mentally mid-workout, resulting in poor pacing estimates on changing inclines.",
+    solution: "A zero-dependency recalculation engine operating on input events with live marathon split matrix visualization.",
+    deliverables: ["Progressive Web App manifest", "Offline Cache Service Worker", "Dynamic marathon interval predictor"],
+    process: "Iteratively benchmarked on mobile WebKit to maintain sub-16ms layout recalculations during continuous input slider events.",
+    results: "Over 800 weekly training runs calibrated; standard tool for local Cascadia running club.",
+    interactiveType: "pace-calculator"
+  },
+  {
+    id: "driftwood",
+    name: "Driftwood Generative",
+    category: "Design",
+    type: "Generative Canvas",
+    badge: "Time-Seeded Art System",
+    featured: true,
+    price: null,
+    gradient: "linear-gradient(135deg, #0C4A6E 0%, #0369A1 100%)",
+    desc: "Generative procedural wave topology rendered on HTML5 canvas seeded by Cascadia solar time.",
+    problem: "Standard portfolio banners feel static and unreactive to the user's environment.",
+    solution: "Procedural trigonometry rendering smooth organic ribbon topography that reacts to time-of-day and mouse gravity.",
+    deliverables: ["Time-seed generator", "Custom trigonometric wave shader", "Vector SVG path exporter"],
+    process: "Developed custom Perlin-style trigonometric harmonics to guarantee non-repeating yet structured fluid paths.",
+    results: "Featured in creative coding digests and generative art compilations.",
+    interactiveType: "driftwood-interactive"
+  },
+  {
+    id: "neubrutal-ui",
+    name: "NeoBrutalist Design Tokens",
+    category: "Shop",
+    type: "Figma (.fig) · $28",
+    badge: "Design Tokens & UI Kit",
+    featured: true,
+    price: "$28",
+    basePrice: 28,
+    gradient: "linear-gradient(135deg, #78350F 0%, #B45309 100%)",
+    desc: "High-contrast architectural design system comprising 320+ auto-layout components, tokens, and chart specifications.",
+    problem: "Engineers building technical tools waste weeks creating unbalanced, inconsistent UI states.",
+    solution: "A crisp, brutalist design language with pre-mapped semantic color variables and Tailwind CSS bindings.",
+    deliverables: ["320+ Figma Variants", "Auto-layout 5.0 tokens", "Tailwind config JSON", "Commercial license"],
+    process: "Distilled from actual production requirements across five independent enterprise software projects.",
+    results: "Downloaded by 180+ developers and engineering teams."
+  },
+  {
+    id: "palette",
+    name: "Palette WCAG Auditor",
+    category: "App",
+    type: "Web Application",
+    badge: "WCAG 2.1 Contrast Engine",
+    featured: false,
+    price: null,
+    gradient: "linear-gradient(135deg, #1E1B4B 0%, #3730A3 100%)",
+    desc: "A color palette studio that produces proportional tonal contrast scales with real-time mathematical WCAG 2.1 auditing.",
+    problem: "Standard color pickers generate shades that quickly fail AA accessibility contrast for small text.",
+    solution: "True relative luminance calculations comparing 10 generated shades against ink and background tones simultaneously.",
+    deliverables: ["Luminance math parser", "Live accessibility matrix", "CSS custom property exporter"],
+    process: "Implemented precise sRGB-to-linear RGB gamma curves to ensure calculations match official W3C formulas exactly.",
+    results: "Adopted by independent design teams as their default pre-flight contrast validator.",
+    interactiveType: "palette-generator"
+  },
+  {
+    id: "ledger-app",
+    name: "Ledger Local-First",
+    category: "App",
+    type: "macOS · Windows (Tauri)",
+    badge: "Desktop Software",
+    featured: false,
+    price: null,
+    gradient: "linear-gradient(135deg, #111827 0%, #1F2937 100%)",
+    desc: "A local-first personal financial ledger with zero remote analytics, no cloud accounts, and AES-256 SQLite storage.",
+    problem: "Most budget trackers sell financial telemetry or charge monthly subscriptions for simple arithmetic.",
+    solution: "A compact native desktop client storing financial records locally on disk with fast bank CSV heuristic parsing.",
+    deliverables: ["Tauri / Rust client", "SQLite local encryption schema", "14-Bank CSV parser"],
+    process: "Iteratively refined parsing heuristics against real bank exports containing inconsistent date stamps and credit markers.",
+    results: "Over 60 active beta testers; average cold startup time under 70 milliseconds."
+  },
+  {
+    id: "nordic-packaging",
+    name: "Nordic Coffee Group Identity",
+    category: "Design",
+    type: "Print & Packaging System",
+    badge: "Identity & Debossing",
+    featured: false,
+    price: null,
+    gradient: "linear-gradient(135deg, #27272A 0%, #3F3F46 100%)",
+    desc: "Bespoke typographic identity, biodegradable packaging architecture, and blind debossed labeling for craft roasters.",
+    problem: "Specialty coffee packaging is oversaturated with interchangeable minimalist serif labels.",
+    solution: "An industrial, structured typographic grid stamped directly into unbleached recycled fibrous paper bags.",
+    deliverables: ["Custom display lettering", "Recyclable packaging die-cuts", "Brand specifications manual"],
+    process: "Conducted rigorous ink-absorption trials to ensure micro-typography remained legible across porous kraft paper.",
+    results: "Adopted across 4 flagship roasteries and distributed in 70+ retailers."
+  }
+];
+
+const ESSAYS = [
+  {
+    id: "ai-systems",
+    date: "2026-08-12",
+    title: "Designing Software with Zero Telemetry Creep",
+    tag: "Architecture",
+    readTime: "5 min",
+    excerpt: "Why the future of professional software belongs to local-first databases, clear boundaries, and software you can own.",
+    body: "Modern software has become addicted to remote surveillance. Even simple text editors and calculator apps now communicate with dozen tracking endpoints before rendering a single pixel.\n\nBuilding local-first tools isn't just an ideological choice; it is an engineering advantage. By storing state in local SQLite databases, you eliminate network latency, guarantee offline operation, and respect the mental peace of the user."
+  },
+  {
+    id: "procedural-design",
+    date: "2026-05-18",
+    title: "Building Driftwood: Procedural Math on the Web",
+    tag: "Graphics",
+    readTime: "4 min",
+    excerpt: "How trigonometric harmonics can turn static browser viewports into breathing, dynamic architectural artifacts.",
+    body: "Static imagery on portfolio sites often fails to evoke the living nature of modern software. With Driftwood, I wanted the page to look distinct depending on whether the visitor arrived at dawn or midnight.\n\nBy feeding the current solar time into a compound sine-cosine wave equation, we generate subtle shifts in phase and amplitude that make the site feel situated in physical time."
+  }
+];
+
+// ============================================================================
+// TOAST & CLIPBOARD
+// ============================================================================
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toastBox');
+  document.getElementById('toastMessage').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+function copyContactEmail() {
+  const email = 'contact@shahariar-ahammed.dev';
+  navigator.clipboard.writeText(email).then(() => {
+    showToast(`Copied ${email} to clipboard!`);
+  }).catch(() => {
+    prompt('Copy email:', email);
+  });
+}
+
+// ============================================================================
+// THEME SWITCHER
+// ============================================================================
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeToggleIcon');
+
+function applyTheme(isLight) {
+  if (isLight) {
+    document.body.classList.add('light-theme');
+    themeIcon.textContent = '☀️';
+    localStorage.setItem('ar_atelier_theme', 'light');
+  } else {
+    document.body.classList.remove('light-theme');
+    themeIcon.textContent = '🌙';
+    localStorage.setItem('ar_atelier_theme', 'dark');
+  }
+}
+
+const savedTheme = localStorage.getItem('ar_atelier_theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(savedTheme === 'light' || (!savedTheme && !systemPrefersDark));
+
+themeToggleBtn.addEventListener('click', () => {
+  applyTheme(!document.body.classList.contains('light-theme'));
+});
+
+// ============================================================================
+// DYNAMIC MOUSE SPOTLIGHT (PHYSICS)
+// ============================================================================
+document.addEventListener('mousemove', (e) => {
+  document.querySelectorAll('.interactive-card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  });
+});
+
+// ============================================================================
+// PROCEDURAL CANVAS (DRIFTWOOD)
+// ============================================================================
+let activeAnimIds = [];
+function stopActiveAnimations() {
+  activeAnimIds.forEach(id => cancelAnimationFrame(id));
+  activeAnimIds = [];
+}
+
+function initCanvases() {
+  stopActiveAnimations();
+  document.querySelectorAll('.driftwood-canvas-elem').forEach(canvas => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    let tick = 0;
+    function render() {
+      tick += 0.018;
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.lineWidth = 1.4;
+
+      for (let j = 0; j < 4; j++) {
+        ctx.beginPath();
+        for (let x = 0; x < rect.width; x += 10) {
+          const y = (rect.height / 2) + Math.sin(x * 0.015 + tick + j) * 20 + Math.cos(x * 0.03 - tick) * 10;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+      activeAnimIds.push(requestAnimationFrame(render));
+    }
+    render();
+  });
+}
+
+// ============================================================================
+// CARDS & VIEWS (GRID VS LEDGER)
+// ============================================================================
+let currentCatalogView = 'grid';
+let currentCatalogFilter = 'All';
+let currentSearchQuery = '';
+
+function createCardHTML(item) {
+  const isDriftwood = item.id === 'driftwood';
+  return `
+    <article class="interactive-card" onclick="openDetail('${item.id}')" tabindex="0" onkeydown="if(event.key==='Enter') openDetail('${item.id}')">
+      <div class="card-banner" style="background:${item.gradient};">
+        ${isDriftwood ? '<canvas class="driftwood-canvas-elem"></canvas>' : ''}
+        <div style="z-index:2; text-align:center; color:#FFF;">
+          <div style="font-family:var(--font-display); font-size:1.25rem; font-weight:700;">${item.name}</div>
+          <div style="font-family:var(--font-mono); font-size:0.75rem; opacity:0.85; margin-top:4px;">${item.badge}</div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span class="badge-chip ${item.category.toLowerCase()}">${item.category}</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">${item.type}</span>
+          </div>
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+        </div>
+        <div class="card-meta-bar">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">${item.price ? item.price : 'Open Free'}</span>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent-electric);">Inspect &rarr;</span>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function createLedgerRowHTML(item) {
+  return `
+    <div class="ledger-row" onclick="openDetail('${item.id}')" tabindex="0" onkeydown="if(event.key==='Enter') openDetail('${item.id}')">
+      <div>
+        <strong style="color:var(--ink-primary); font-size:0.95rem;">${item.name}</strong>
+        <div style="color:var(--ink-muted); font-size:0.8rem;">${item.desc.substring(0, 65)}...</div>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-secondary);">${item.type}</div>
+      <div>
+        <span class="badge-chip ${item.category.toLowerCase()}">${item.price || item.category}</span>
+      </div>
+      <div style="text-align:right; font-family:var(--font-mono); font-size:0.78rem; font-weight:700; color:var(--accent-electric);">
+        OPEN &rarr;
+      </div>
+    </div>
+  `;
+}
+
+// HOME RENDERING
+function renderHome() {
+  document.getElementById('homeFeaturedLedger').innerHTML = SYSTEMS.slice(0, 4).map(createLedgerRowHTML).join('');
+  document.getElementById('homeFeaturedCards').innerHTML = SYSTEMS.filter(s => s.featured).map(createCardHTML).join('');
+  initCanvases();
+}
+
+// CATALOG RENDERING
+const FILTERS = ['All', 'App', 'Design', 'Shop'];
+
+function renderFilterPills() {
+  const container = document.getElementById('catalogFilterChips');
+  container.innerHTML = FILTERS.map(f => {
+    const isActive = f === currentCatalogFilter;
+    const count = f === 'All' ? SYSTEMS.length : SYSTEMS.filter(s => s.category === f).length;
+    return `<button type="button" class="btn btn-outline ${isActive ? 'active-budget' : ''}" style="font-size:0.8rem; padding:6px 14px;" onclick="setFilter('${f}')">${f} (${count})</button>`;
+  }).join('');
+}
+
+function setFilter(filter) {
+  currentCatalogFilter = filter;
+  renderFilterPills();
+  renderCatalogItems();
+}
+
+function renderCatalogItems() {
+  let list = SYSTEMS;
+  if (currentCatalogFilter !== 'All') {
+    list = list.filter(i => i.category === currentCatalogFilter);
+  }
+  if (currentSearchQuery.trim()) {
+    const q = currentSearchQuery.toLowerCase();
+    list = list.filter(i => i.name.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q) || i.badge.toLowerCase().includes(q));
+  }
+
+  const out = document.getElementById('catalogOutputContainer');
+  if (list.length === 0) {
+    out.innerHTML = `<div style="text-align:center; padding:60px 0; font-family:var(--font-mono); color:var(--ink-muted);">No software matches active query parameters.</div>`;
+    return;
+  }
+
+  if (currentCatalogView === 'grid') {
+    out.innerHTML = `<div class="work-grid">${list.map(createCardHTML).join('')}</div>`;
+    initCanvases();
+  } else {
+    out.innerHTML = `
+      <div class="ledger-table-wrap">
+        <div class="ledger-row ledger-head">
+          <div>NAME</div><div>ARCHITECTURE</div><div>DISTRIBUTION</div><div style="text-align:right;">INSPECT</div>
+        </div>
+        ${list.map(createLedgerRowHTML).join('')}
+      </div>
+    `;
+  }
+}
+
+document.getElementById('viewModeGridBtn').addEventListener('click', () => {
+  currentCatalogView = 'grid';
+  renderCatalogItems();
+});
+document.getElementById('viewModeTableBtn').addEventListener('click', () => {
+  currentCatalogView = 'table';
+  renderCatalogItems();
+});
+
+const catalogSearch = document.getElementById('catalogSearchInput');
+catalogSearch.addEventListener('input', (e) => {
+  currentSearchQuery = e.target.value;
+  renderCatalogItems();
+});
+
+// SHORTCUT: '/' KEY TO SEARCH
+window.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    navigate('work');
+    catalogSearch.focus();
+    showToast("Searching catalog...");
+  }
+});
+
+// ============================================================================
+// INTERACTIVE RUNNERS IN DETAIL VIEW
+// ============================================================================
+function getSandboxHTML(item) {
+  if (item.interactiveType === "pace-calculator") {
+    return `
+      <div class="sandbox-station">
+        <div class="sandbox-header">
+          <span>⚡ LIVE RUNNER // SPLIT ARITHMETIC ENGINE</span>
+          <span style="color:var(--accent-emerald);">REALTIME RUNTIME</span>
+        </div>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:18px;">
+          <label style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700;">Target Pace (min/km):</label>
+          <input type="number" id="detailPaceInput" value="4.5" step="0.1" min="2" max="12"
+            style="background:var(--surface); border:1px solid var(--border-strong); border-radius:8px; padding:6px 12px; font-family:var(--font-mono); width:90px;"
+            oninput="recalcPace(this.value)">
+          <span id="speedEquiv" style="font-family:var(--font-mono); font-size:0.8rem; color:var(--ink-secondary);">13.33 km/h · 8.28 mph</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(110px, 1fr)); gap:10px; font-family:var(--font-mono); font-size:0.8rem;">
+          <div style="background:var(--surface); padding:12px; border-radius:8px; text-align:center; border:1px solid var(--border-subtle);">
+            <div style="color:var(--ink-muted); font-size:0.7rem;">5 KM</div>
+            <strong id="time5k" style="font-size:1.1rem; color:var(--ink-primary);">22:30</strong>
+          </div>
+          <div style="background:var(--surface); padding:12px; border-radius:8px; text-align:center; border:1px solid var(--border-subtle);">
+            <div style="color:var(--ink-muted); font-size:0.7rem;">10 KM</div>
+            <strong id="time10k" style="font-size:1.1rem; color:var(--ink-primary);">45:00</strong>
+          </div>
+          <div style="background:var(--surface); padding:12px; border-radius:8px; text-align:center; border:1px solid var(--border-subtle);">
+            <div style="color:var(--ink-muted); font-size:0.7rem;">HALF MARATHON</div>
+            <strong id="timeHalf" style="font-size:1.1rem; color:var(--ink-primary);">1:34:56</strong>
+          </div>
+          <div style="background:var(--surface); padding:12px; border-radius:8px; text-align:center; border:1px solid var(--border-subtle);">
+            <div style="color:var(--ink-muted); font-size:0.7rem;">FULL MARATHON</div>
+            <strong id="timeFull" style="font-size:1.1rem; color:var(--ink-primary);">3:09:53</strong>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  if (item.interactiveType === "palette-generator") {
+    return `
+      <div class="sandbox-station">
+        <div class="sandbox-header">
+          <span>🎨 ACCESSIBILITY AUDITOR // WCAG 2.1 LUMINANCE ENGINE</span>
+          <span style="color:var(--accent-electric);">MATHEMATICAL FORMULA</span>
+        </div>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
+          <label style="font-family:var(--font-mono); font-size:0.8rem;">Pick Base Hex:</label>
+          <input type="color" id="baseColorInput" value="#0284c7" style="width:40px; height:40px; border:none; cursor:pointer; border-radius:6px;" oninput="auditColorContrast(this.value)">
+          <div id="contrastBadgeResult" style="padding:8px 16px; border-radius:8px; background:#0284c7; color:#FFF; font-weight:700; font-family:var(--font-mono); font-size:0.82rem;">
+            4.6:1 (AA PASS)
+          </div>
+        </div>
+        <div id="paletteShadeStrip" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; font-family:var(--font-mono); font-size:0.72rem; text-align:center;"></div>
+      </div>
+    `;
+  }
+  if (item.interactiveType === "driftwood-interactive") {
+    return `
+      <div class="sandbox-station">
+        <div class="sandbox-header">
+          <span>🌊 HARMONIC WAVE PARAMETRIC GENERATOR</span>
+          <button type="button" class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="randomizeWaves()">Mutate Seed</button>
+        </div>
+        <div style="height:140px; background:var(--bg-base); border-radius:8px; position:relative; overflow:hidden;">
+          <canvas id="driftwoodSandboxCanvas" style="width:100%; height:100%;"></canvas>
+        </div>
+      </div>
+    `;
+  }
+  return "";
+}
+
+function recalcPace(val) {
+  const pace = parseFloat(val);
+  if (!pace || pace <= 0) return;
+
+  const speedKm = (60 / pace).toFixed(2);
+  const speedMi = (speedKm * 0.621371).toFixed(2);
+  document.getElementById('speedEquiv').textContent = `${speedKm} km/h · ${speedMi} mph`;
+
+  function fmt(sec) {
+    sec = Math.round(sec);
+    const hrs = Math.floor(sec / 3600);
+    const mins = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    const sPad = s < 10 ? '0' + s : s;
+    if (hrs > 0) {
+      const mPad = mins < 10 ? '0' + mins : mins;
+      return `${hrs}:${mPad}:${sPad}`;
+    }
+    return `${mins}:${sPad}`;
+  }
+
+  const paceSec = pace * 60;
+  document.getElementById('time5k').textContent = fmt(paceSec * 5);
+  document.getElementById('time10k').textContent = fmt(paceSec * 10);
+  document.getElementById('timeHalf').textContent = fmt(paceSec * 21.0975);
+  document.getElementById('timeFull').textContent = fmt(paceSec * 42.195);
+}
+
+function auditColorContrast(hex) {
+  function getLuminance(r, g, b) {
+    const a = [r, g, b].map(v => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  }
+  const r = parseInt(hex.substr(1, 2), 16);
+  const g = parseInt(hex.substr(3, 2), 16);
+  const b = parseInt(hex.substr(5, 2), 16);
+  const lum = getLuminance(r, g, b);
+  const whiteLum = 1.0;
+  const ratio = (whiteLum + 0.05) / (lum + 0.05);
+
+  const badge = document.getElementById('contrastBadgeResult');
+  badge.style.backgroundColor = hex;
+  badge.style.color = ratio > 4.5 ? '#FFFFFF' : '#000000';
+  badge.textContent = `${ratio.toFixed(2)}:1 ${ratio >= 4.5 ? '(AA PASS)' : '(FAIL)'}`;
+}
+
+// ============================================================================
+// DETAIL PAGE CONTROLLER & DEEP ROUTING
+// ============================================================================
+function openDetail(id) {
+  navigate(`detail/${id}`);
+}
+
+function renderDetailPage(id) {
+  const item = SYSTEMS.find(s => s.id === id);
+  const container = document.getElementById('detailViewContainer');
+  if (!item || !container) return;
+
+  const actions = [];
+  if (item.category === "Shop") {
+    actions.push(`<button type="button" class="btn btn-yellow" onclick="openCheckoutModal('${item.id}')">Purchase Asset (${item.price}) 📦</button>`);
+  } else {
+    actions.push(`<a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener noreferrer">Source Repository ↗</a>`);
+  }
+
+  container.innerHTML = `
+    <div class="detail-showcase" style="background:${item.gradient};">
+      <div style="text-align:center; color:#FFF; padding:20px;">
+        <h1 style="font-size:2.4rem; font-family:var(--font-display);">${item.name}</h1>
+        <div style="font-family:var(--font-mono); font-size:0.85rem; opacity:0.9;">${item.badge}</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; border-bottom:1px solid var(--border-subtle); padding-bottom:28px;">
+      <div>
+        <span class="badge-chip ${item.category.toLowerCase()}" style="margin-bottom:8px;">${item.category}</span>
+        <h2 style="font-size:1.8rem; margin:6px 0;">${item.name}</h2>
+        <p class="lede">${item.desc}</p>
+        <div style="display:flex; gap:12px; margin-top:16px;">${actions.join('')}</div>
+      </div>
+    </div>
+
+    ${getSandboxHTML(item)}
+
+    <div class="spec-grid">
+      <div>
+        <h3 style="font-size:1rem; font-family:var(--font-mono); color:var(--ink-muted); margin-bottom:8px;">PROBLEM SPECIFICATION</h3>
+        <p style="color:var(--ink-secondary); line-height:1.7; margin-bottom:28px;">${item.problem}</p>
+
+        <h3 style="font-size:1rem; font-family:var(--font-mono); color:var(--ink-muted); margin-bottom:8px;">ENGINEERING SOLUTION</h3>
+        <p style="color:var(--ink-secondary); line-height:1.7; margin-bottom:28px;">${item.solution}</p>
+
+        <h3 style="font-size:1rem; font-family:var(--font-mono); color:var(--ink-muted); margin-bottom:8px;">DELIVERABLES & TOKENS</h3>
+        <ul style="padding-left:20px; color:var(--ink-secondary); line-height:1.8; margin-bottom:28px;">
+          ${item.deliverables.map(d => `<li>${d}</li>`).join('')}
+        </ul>
+
+        <h3 style="font-size:1rem; font-family:var(--font-mono); color:var(--ink-muted); margin-bottom:8px;">VERIFIED IMPACT</h3>
+        <p style="color:var(--ink-secondary); line-height:1.7;">${item.results}</p>
+      </div>
+
+      <aside style="background:var(--surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:24px; height:fit-content;">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:4px;">STATUS</div>
+        <div style="font-weight:700; margin-bottom:16px;">Production Grade</div>
+
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:4px;">PLATFORMS</div>
+        <div style="font-weight:700; margin-bottom:16px;">${item.type}</div>
+
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:4px;">LICENSE</div>
+        <div style="font-weight:700;">${item.price ? 'Commercial Asset' : 'MIT Open License'}</div>
+      </aside>
+    </div>
+  `;
+}
+
+// ============================================================================
+// WRITINGS / BLOG
+// ============================================================================
+function renderBlogPosts() {
+  document.getElementById('blogPostListing').innerHTML = ESSAYS.map(post => `
+    <article style="background:var(--surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:24px; cursor:pointer; transition:border-color 0.2s;"
+      onclick="navigate('blogpost/${post.id}')" tabindex="0" onkeydown="if(event.key==='Enter') navigate('blogpost/${post.id}')">
+      <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--ink-muted); margin-bottom:6px;">${post.date} · ${post.tag} · ${post.readTime}</div>
+      <h2 style="font-size:1.35rem; margin-bottom:8px;">${post.title}</h2>
+      <p style="color:var(--ink-secondary); font-size:0.94rem; margin:0;">${post.excerpt}</p>
+    </article>
+  `).join('');
+}
+
+function renderBlogPostView(id) {
+  const post = ESSAYS.find(e => e.id === id);
+  const container = document.getElementById('blogPostContainer');
+  if (!post || !container) return;
+
+  container.innerHTML = `
+    <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:12px;">${post.date} · ${post.tag} · ${post.readTime}</div>
+    <h1 style="font-size:2.4rem; margin-bottom:28px;">${post.title}</h1>
+    ${post.body.split('\n\n').map(p => `<p style="font-size:1.05rem; line-height:1.75; color:var(--ink-secondary); margin-bottom:20px;">${p}</p>`).join('')}
+  `;
+}
+
+// ============================================================================
+// NAVIGATION & HASH ROUTING
+// ============================================================================
+function navigate(route, updateHash = true) {
+  const [page, id] = route.split('/');
+  document.querySelectorAll('section.page').forEach(p => p.classList.remove('active'));
+
+  const targetEl = document.getElementById(`page-${page}`);
+  if (targetEl) targetEl.classList.add('active');
+
+  document.querySelectorAll('#mainNav button').forEach(btn => {
+    const isActive = btn.dataset.nav === page;
+    btn.classList.toggle('active', isActive);
+    if (isActive) btn.setAttribute('aria-current', 'page');
+    else btn.removeAttribute('aria-current');
+  });
+
+  if (page === 'detail' && id) renderDetailPage(id);
+  if (page === 'blogpost' && id) renderBlogPostView(id);
+
+  if (updateHash) location.hash = route;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+window.addEventListener('hashchange', () => {
+  const r = (location.hash || '#home').replace('#', '');
+  navigate(r, false);
+});
+
+document.querySelectorAll('[data-nav]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigate(el.dataset.nav);
+  });
+});
+
+// ============================================================================
+// COMMAND PALETTE ENGINE (⌘K)
+// ============================================================================
+const paletteModal = document.getElementById('commandPaletteModal');
+const paletteSearch = document.getElementById('paletteSearchField');
+const paletteList = document.getElementById('paletteResultsList');
+
+function openCommandPalette() {
+  paletteModal.classList.add('open');
+  paletteSearch.value = '';
+  renderPaletteResults('');
+  paletteSearch.focus();
+}
+
+function closeCommandPalette() {
+  paletteModal.classList.remove('open');
+}
+
+function renderPaletteResults(query) {
+  const q = query.toLowerCase();
+  const results = [];
+
+  [['Home', 'home'], ['Catalog', 'work'], ['Atelier', 'about'], ['Writings', 'blog'], ['Inquire', 'contact']].forEach(([name, route]) => {
+    if (!q || name.toLowerCase().includes(q)) {
+      results.push({ label: `Go to ${name}`, action: () => { navigate(route); closeCommandPalette(); } });
+    }
+  });
+
+  SYSTEMS.forEach(s => {
+    if (!q || s.name.toLowerCase().includes(q) || s.category.toLowerCase().includes(q)) {
+      results.push({ label: `System: ${s.name} (${s.badge})`, action: () => { openDetail(s.id); closeCommandPalette(); } });
+    }
+  });
+
+  if (!q || 'copy email'.includes(q)) {
+    results.push({ label: 'Action: Copy Direct Email', action: () => { copyContactEmail(); closeCommandPalette(); } });
+  }
+  if (!q || 'toggle theme'.includes(q)) {
+    results.push({ label: 'Action: Toggle Light/Dark Mode', action: () => { applyTheme(!document.body.classList.contains('light-theme')); closeCommandPalette(); } });
+  }
+
+  paletteList.innerHTML = results.map((r, i) => `
+    <div class="palette-item" onclick="executePaletteAction(${i})" tabindex="0">
+      <span style="font-size:0.9rem;">${r.label}</span>
+      <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted);">SELECT ↵</span>
+    </div>
+  `).join('');
+
+  window._currentPaletteActions = results;
+}
+
+function executePaletteAction(index) {
+  if (window._currentPaletteActions && window._currentPaletteActions[index]) {
+    window._currentPaletteActions[index].action();
+  }
+}
+
+paletteSearch.addEventListener('input', (e) => renderPaletteResults(e.target.value));
+
+window.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    if (paletteModal.classList.contains('open')) closeCommandPalette();
+    else openCommandPalette();
+  }
+  if (e.key === 'Escape') {
+    closeCommandPalette();
+    closeModal();
+  }
+});
+
+paletteModal.addEventListener('click', (e) => {
+  if (e.target === paletteModal) closeCommandPalette();
+});
+
+// ============================================================================
+// STORE CHECKOUT SIMULATION WITH NATIVE FILE BLOB
+// ============================================================================
+let activeItemForCheckout = null;
+let currentBasePrice = 28;
+
+function openCheckoutModal(id) {
+  const item = SYSTEMS.find(s => s.id === id);
+  if (!item) return;
+
+  activeItemForCheckout = item;
+  currentBasePrice = item.basePrice || 28;
+  document.getElementById('modalAssetTitle').textContent = item.name;
+  document.getElementById('modalAssetPrice').textContent = "$" + currentBasePrice;
+  document.getElementById('modalAssetDesc').textContent = item.desc;
+
+  selectLicense('standard');
+  document.getElementById('purchaseProgressTrack').style.display = 'none';
+  document.getElementById('purchaseProgressBar').style.width = '0%';
+  document.getElementById('purchaseActionBtn').textContent = "Execute Purchase & Download ↓";
+  document.getElementById('purchaseActionBtn').disabled = false;
+
+  document.getElementById('checkoutModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+
+function selectLicense(type) {
+  const std = document.getElementById('licStdBtn');
+  const ext = document.getElementById('licExtBtn');
+  const price = document.getElementById('modalAssetPrice');
+
+  if (type === 'standard') {
+    std.style.borderColor = 'var(--accent-electric)';
+    ext.style.borderColor = 'var(--border-medium)';
+    price.textContent = "$" + currentBasePrice;
+  } else {
+    ext.style.borderColor = 'var(--accent-electric)';
+    std.style.borderColor = 'var(--border-medium)';
+    price.textContent = "$" + (currentBasePrice + 40);
+  }
+}
+
+function runSimulatedPurchase() {
+  const btn = document.getElementById('purchaseActionBtn');
+  const track = document.getElementById('purchaseProgressTrack');
+  const bar = document.getElementById('purchaseProgressBar');
+  const msg = document.getElementById('purchaseStatusMsg');
+
+  btn.disabled = true;
+  btn.textContent = "Packaging Vector Tokens...";
+  track.style.display = 'block';
+
+  setTimeout(() => bar.style.width = '100%', 80);
+
+  setTimeout(() => {
+    btn.textContent = "✓ Package Ready";
+    btn.style.background = "var(--accent-emerald)";
+    msg.textContent = "Commercial license generated. Starting download.";
+
+    const receipt = 
+      `SHAHARIAR AHAMMED ATELIER — ASSET TRANSMISSION RECEIPT\n` +
+      `Asset: ${activeItemForCheckout.name}\n` +
+      `Token: AR-SYS-${Math.random().toString(36).substr(2, 8).toUpperCase()}\n` +
+      `Rights: Commercial Tier Verified\n` +
+      `Timestamp: ${new Date().toISOString()}\n`;
+
+    const blob = new Blob([receipt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `license-${activeItemForCheckout.id}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast("License certificate downloaded!");
+  }, 1700);
+}
+
+document.getElementById('checkoutModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('checkoutModal')) closeModal();
+});
+
+// ============================================================================
+// CONTACT FORM WITH VALIDATION
+// ============================================================================
+let activeBudgetChoice = '< $5k';
+
+function selectBudget(btn, val) {
+  document.querySelectorAll('#studioInquiryForm .btn-outline').forEach(b => b.classList.remove('active-budget'));
+  btn.classList.add('active-budget');
+  activeBudgetChoice = val;
+}
+
+const msgField = document.getElementById('formMsg');
+msgField.addEventListener('input', () => {
+  document.getElementById('formCharCount').textContent = `${msgField.value.length} / 500`;
+});
+
+document.getElementById('studioInquiryForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let pass = true;
+
+  const name = document.getElementById('formName');
+  const email = document.getElementById('formEmail');
+  const msg = document.getElementById('formMsg');
+
+  const errN = document.getElementById('errName');
+  const errE = document.getElementById('errEmail');
+  const errM = document.getElementById('errMsg');
+
+  errN.textContent = ''; errE.textContent = ''; errM.textContent = '';
+
+  if (!name.value.trim()) { errN.textContent = 'Name required'; pass = false; }
+  if (!email.value.includes('@')) { errE.textContent = 'Valid email required'; pass = false; }
+  if (!msg.value.trim()) { errM.textContent = 'Project brief required'; pass = false; }
+
+  if (!pass) return;
+
+  const ref = `CAS-${Math.floor(1000 + Math.random() * 9000)}`;
+  document.getElementById('confirmationRefId').textContent = `DISPATCH PROTOCOL: ${ref} // BUDGET: ${activeBudgetChoice}`;
+  document.getElementById('inquiryConfirmation').style.display = 'block';
+  this.style.display = 'none';
+  showToast("Inquiry logged to queue!");
+});
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+renderHome();
+renderFilterPills();
+renderCatalogItems();
+renderBlogPosts();
+
+const initialRoute = (location.hash || '#home').replace('#', '');
+navigate(initialRoute, false);
+</script>
+</body>
+</html>
