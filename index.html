@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#0B0D11" id="metaThemeColor">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Shahariar Ahammed — Systems & Software Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -564,6 +567,357 @@
     opacity: 1;
     pointer-events: auto;
   }
+
+  /* ==========================================================================
+     RESPONSIVE DESIGN SYSTEM (Mobile, Tablet, Laptop, 4K Screens)
+     ========================================================================== */
+  
+  /* Touch Ergonomics */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, input, select, textarea, a { touch-action: manipulation; }
+
+  /* Mobile menu button hidden on desktop */
+  .mobile-menu-toggle {
+    display: none;
+    font-size: 1.15rem;
+  }
+
+  .mobile-nav-drawer {
+    display: none;
+    background: rgba(11, 13, 17, 0.97);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--border-medium);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+  body.light-theme .mobile-nav-drawer {
+    background: rgba(248, 249, 250, 0.98);
+  }
+
+  .mobile-nav-content {
+    padding: 16px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+  }
+  .mobile-nav-item:active, .mobile-nav-item.active {
+    background: var(--surface-hover);
+    color: var(--ink-primary);
+    border-color: var(--accent-electric);
+    box-shadow: inset 0 0 0 1px var(--accent-electric);
+  }
+  .mobile-nav-bullet {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-electric);
+    margin-right: 12px;
+  }
+  .mobile-nav-arrow {
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+  }
+  .mobile-nav-item:active .mobile-nav-arrow {
+    transform: translate(2px, -2px);
+    color: var(--ink-primary);
+  }
+
+  .mobile-nav-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+  }
+
+  /* Catalog Toolbar */
+  .catalog-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .catalog-filter-wrap {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .catalog-actions-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* Form responsive grid */
+  .form-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* License modal grid */
+  .license-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Spec grid */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    margin-top: 40px;
+  }
+
+  /* Responsive Work Grid */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
+    gap: 24px;
+  }
+
+  /* -------------------------------------------------------------
+     BREAKPOINT 1: ULTRA-WIDE / 4K MONITORS (>= 1440px)
+     ------------------------------------------------------------- */
+  @media (min-width: 1440px) {
+    .wrap {
+      max-width: 1200px;
+      padding: 0 32px;
+    }
+    .hero-block h1 {
+      font-size: 3.8rem;
+    }
+    .work-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     BREAKPOINT 2: TABLETS & MEDIUM SCREENS (769px to 1024px)
+     ------------------------------------------------------------- */
+  @media (max-width: 1024px) {
+    .spec-grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 28px;
+    }
+    .ledger-row {
+      grid-template-columns: 1.8fr 1.2fr 1fr 70px;
+      padding: 14px 16px;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     BREAKPOINT 3: MOBILE & PHABLETS (<= 840px)
+     ------------------------------------------------------------- */
+  @media (max-width: 840px) {
+    #mainNav {
+      display: none;
+    }
+    .mobile-menu-toggle {
+      display: grid;
+    }
+    .mobile-nav-drawer {
+      display: block;
+    }
+    .mobile-nav-drawer.open {
+      max-height: 520px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .spec-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .catalog-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+    }
+    .catalog-filter-wrap {
+      overflow-x: auto;
+      padding-bottom: 6px;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .catalog-filter-wrap::-webkit-scrollbar {
+      display: none;
+    }
+    .catalog-actions-wrap {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .catalog-actions-wrap > div:first-child {
+      flex: 1;
+    }
+    #catalogSearchInput {
+      width: 100% !important;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     BREAKPOINT 4: STANDARD PHONES (<= 640px)
+     ------------------------------------------------------------- */
+  @media (max-width: 640px) {
+    .wrap {
+      padding: 0 18px;
+    }
+
+    /* Prevent mobile keyboard auto-zoom on iOS */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+
+    .hero-block {
+      gap: 16px;
+      padding-bottom: 32px;
+      margin-bottom: 36px;
+    }
+    .hero-block h1 {
+      font-size: clamp(2rem, 8.5vw, 2.75rem);
+      line-height: 1.15;
+    }
+    .hero-block p.lede {
+      font-size: 1.04rem;
+    }
+
+    .hero-cta-btns {
+      flex-direction: column;
+      width: 100%;
+    }
+    .hero-cta-btns .btn {
+      width: 100%;
+      padding: 13px 20px;
+      font-size: 0.95rem;
+    }
+
+    .form-grid-2col {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .ledger-head {
+      display: none;
+    }
+    .ledger-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px;
+    }
+    .ledger-row > div:nth-child(2) {
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+    }
+    .ledger-row > div:nth-child(3) {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-emerald);
+    }
+    .ledger-row > div:last-child {
+      text-align: left;
+      margin-top: 4px;
+    }
+
+    .work-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .card-banner {
+      height: 165px;
+    }
+    .card-content {
+      padding: 18px;
+    }
+
+    .modal-overlay {
+      padding: 12px;
+      align-items: flex-end;
+    }
+    .command-palette-box {
+      width: 100%;
+      max-height: 85vh;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      animation: modalInMobile 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalInMobile {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .license-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .toast-banner {
+      left: 16px;
+      right: 16px;
+      bottom: 20px;
+      justify-content: center;
+    }
+
+    .detail-showcase {
+      min-height: 180px;
+      margin-bottom: 24px;
+    }
+
+    footer .wrap {
+      flex-direction: column;
+      text-align: center;
+      gap: 18px;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     BREAKPOINT 5: SMALL PHONES (<= 380px)
+     ------------------------------------------------------------- */
+  @media (max-width: 380px) {
+    .brand-signature span.brand-name {
+      font-size: 0.92rem;
+    }
+    .brand-cube {
+      width: 22px;
+      height: 22px;
+      font-size: 0.65rem;
+    }
+    .wrap {
+      padding: 0 12px;
+    }
+    .btn {
+      padding: 10px 14px;
+      font-size: 0.85rem;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -573,7 +927,7 @@
   <div class="wrap nav-bar">
     <button type="button" class="brand-signature" data-nav="home" aria-label="Shahariar Ahammed home">
       <div class="brand-cube" aria-hidden="true">SA</div>
-      <span>Shahariar Ahammed</span>
+      <span class="brand-name">Shahariar Ahammed</span>
     </button>
 
     <nav class="nav-links" id="mainNav" aria-label="Main navigation">
@@ -591,6 +945,49 @@
       <button type="button" class="icon-tool-btn" id="themeToggleBtn" aria-label="Toggle visual theme">
         <span id="themeToggleIcon">🌙</span>
       </button>
+      <button type="button" class="icon-tool-btn mobile-menu-toggle" id="mobileMenuToggleBtn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span id="mobileMenuIcon">☰</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Responsive Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="wrap mobile-nav-content">
+      <div class="mobile-nav-links">
+        <button class="mobile-nav-item active" data-nav="home" onclick="closeMobileMenu()">
+          <span class="mobile-nav-bullet">01</span>
+          <span>Home</span>
+          <span class="mobile-nav-arrow">↗</span>
+        </button>
+        <button class="mobile-nav-item" data-nav="work" onclick="closeMobileMenu()">
+          <span class="mobile-nav-bullet">02</span>
+          <span>Catalog & Systems</span>
+          <span class="mobile-nav-arrow">↗</span>
+        </button>
+        <button class="mobile-nav-item" data-nav="about" onclick="closeMobileMenu()">
+          <span class="mobile-nav-bullet">03</span>
+          <span>Atelier Profile</span>
+          <span class="mobile-nav-arrow">↗</span>
+        </button>
+        <button class="mobile-nav-item" data-nav="blog" onclick="closeMobileMenu()">
+          <span class="mobile-nav-bullet">04</span>
+          <span>Notes & Essays</span>
+          <span class="mobile-nav-arrow">↗</span>
+        </button>
+        <button class="mobile-nav-item" data-nav="contact" onclick="closeMobileMenu()">
+          <span class="mobile-nav-bullet">05</span>
+          <span>Inquire & Hire</span>
+          <span class="mobile-nav-arrow">↗</span>
+        </button>
+      </div>
+      <div class="mobile-nav-footer">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:8px;">QUICK DISPATCH</div>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="btn btn-outline" style="flex:1; padding:10px; font-size:0.82rem;" onclick="copyContactEmail(); closeMobileMenu();">Copy Email</button>
+          <button type="button" class="btn btn-primary" style="flex:1; padding:10px; font-size:0.82rem;" onclick="openCommandPalette(); closeMobileMenu();">Search (⌘K)</button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -603,7 +1000,7 @@
       <div class="tag-label">INDEPENDENT SOFTWARE ARCHITECT & DESIGNER</div>
       <h1 id="homeHeroTitle">Purpose-built tools designed with relentless restraint.</h1>
       <p class="lede">I build zero-telemetry developer utilities, local-first web applications, and robust graphic identity systems. Designed to be tested in seconds with zero onboarding loops.</p>
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+      <div class="hero-cta-btns" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
         <button type="button" class="btn btn-primary" data-nav="work">Explore the catalog ↗</button>
         <button type="button" class="btn btn-outline" data-nav="contact">Initiate project</button>
       </div>
@@ -639,10 +1036,10 @@
     <p class="lede" style="margin-bottom:32px;">Production desktop releases, single-page web utilities, and vector component assets.</p>
 
     <!-- Filter toolbar & view switcher -->
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:28px;">
-      <div id="catalogFilterChips" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+    <div class="catalog-toolbar">
+      <div id="catalogFilterChips" class="catalog-filter-wrap"></div>
       
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div class="catalog-actions-wrap">
         <div style="position:relative;">
           <input type="text" id="catalogSearchInput" placeholder="Filter systems ( / )" 
             style="background:var(--surface); border:1px solid var(--border-medium); border-radius:var(--radius-pill); padding:8px 36px 8px 16px; font-size:0.86rem; color:var(--ink-primary); width:200px;">
@@ -720,7 +1117,7 @@
     <div class="spec-grid" style="margin-top:0;">
       <div>
         <form id="studioInquiryForm" style="display:flex; flex-direction:column; gap:20px;" novalidate>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-grid-2col">
             <div>
               <label for="formName" class="tag-label" style="margin-bottom:6px;">Your Name</label>
               <input id="formName" type="text" required placeholder="Elena Rostova" style="width:100%; background:var(--surface); border:1px solid var(--border-medium); border-radius:10px; padding:12px 14px; color:var(--ink-primary);">
@@ -792,7 +1189,7 @@
     <div class="palette-input-wrap">
       <span style="font-family:var(--font-mono); color:var(--ink-muted);">⌘</span>
       <input type="text" id="paletteSearchField" placeholder="Search systems, essays, actions..." autocomplete="off">
-      <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--ink-muted);">ESC</span>
+      <button type="button" onclick="closeCommandPalette()" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-muted); padding:4px 8px; border-radius:6px; background:var(--surface-hover); cursor:pointer;" aria-label="Close search">ESC ✕</button>
     </div>
     <div class="palette-results" id="paletteResultsList"></div>
   </div>
@@ -810,7 +1207,7 @@
     <p id="modalAssetDesc" style="color:var(--ink-secondary); font-size:0.92rem; margin-bottom:20px;"></p>
     
     <label class="tag-label" style="margin-bottom:8px;">COMMERCIAL LICENSE TIER</label>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;">
+    <div class="license-grid">
       <div id="licStdBtn" class="btn btn-outline" onclick="selectLicense('standard')" style="flex-direction:column; padding:12px; border-color:var(--accent-electric); cursor:pointer;">
         <span>Standard</span>
         <span style="font-size:0.7rem; color:var(--ink-muted);">1 Project Seat</span>
@@ -1005,14 +1402,17 @@ const themeToggleBtn = document.getElementById('themeToggleBtn');
 const themeIcon = document.getElementById('themeToggleIcon');
 
 function applyTheme(isLight) {
+  const metaTheme = document.getElementById('metaThemeColor');
   if (isLight) {
     document.body.classList.add('light-theme');
     themeIcon.textContent = '☀️';
     localStorage.setItem('ar_atelier_theme', 'light');
+    if (metaTheme) metaTheme.setAttribute('content', '#F8F9FA');
   } else {
     document.body.classList.remove('light-theme');
     themeIcon.textContent = '🌙';
     localStorage.setItem('ar_atelier_theme', 'dark');
+    if (metaTheme) metaTheme.setAttribute('content', '#0B0D11');
   }
 }
 
@@ -1433,6 +1833,45 @@ function renderBlogPostView(id) {
 }
 
 // ============================================================================
+
+// ============================================================================
+// MOBILE NAVIGATION DRAWER
+// ============================================================================
+const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+const mobileMenuBtn = document.getElementById('mobileMenuToggleBtn');
+const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+function toggleMobileMenu() {
+  const isOpen = mobileNavDrawer.classList.contains('open');
+  if (isOpen) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
+
+function openMobileMenu() {
+  mobileNavDrawer.classList.add('open');
+  mobileNavDrawer.setAttribute('aria-hidden', 'false');
+  mobileMenuBtn.setAttribute('aria-expanded', 'true');
+  mobileMenuIcon.textContent = '✕';
+}
+
+function closeMobileMenu() {
+  if (!mobileNavDrawer) return;
+  mobileNavDrawer.classList.remove('open');
+  mobileNavDrawer.setAttribute('aria-hidden', 'true');
+  mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  mobileMenuIcon.textContent = '☰';
+}
+
+// Close mobile menu on scroll or click outside
+window.addEventListener('scroll', () => {
+  if (mobileNavDrawer && mobileNavDrawer.classList.contains('open')) {
+    closeMobileMenu();
+  }
+}, { passive: true });
+
 // NAVIGATION & HASH ROUTING
 // ============================================================================
 function navigate(route, updateHash = true) {
@@ -1442,7 +1881,7 @@ function navigate(route, updateHash = true) {
   const targetEl = document.getElementById(`page-${page}`);
   if (targetEl) targetEl.classList.add('active');
 
-  document.querySelectorAll('#mainNav button').forEach(btn => {
+  document.querySelectorAll('#mainNav button, .mobile-nav-item').forEach(btn => {
     const isActive = btn.dataset.nav === page;
     btn.classList.toggle('active', isActive);
     if (isActive) btn.setAttribute('aria-current', 'page');
@@ -1683,6 +2122,16 @@ renderBlogPosts();
 
 const initialRoute = (location.hash || '#home').replace('#', '');
 navigate(initialRoute, false);
+
+// Debounced resize handler for fluid canvas recalculation
+let resizeDebounceTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeDebounceTimer);
+  resizeDebounceTimer = setTimeout(() => {
+    if (typeof initCanvases === 'function') initCanvases();
+  }, 200);
+});
+
 </script>
 </body>
 </html>
